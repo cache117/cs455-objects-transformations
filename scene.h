@@ -96,6 +96,12 @@ private:
 	Transform getInitialParkingLotTransform();
 	Transform getInitialTireTransform(TirePosition tirePosition);
 
+	const glm::vec3 tireScale = glm::vec3(0.25f, 0.25f, 0.25f);
+	const glm::vec3 leftTireRotation = glm::vec3(0, 3.0f, 0);
+	const float tireZ = 0.5f;
+	const float tireX = 0.2f;
+	const float tireY = 0.1f;
+
 	float xMovement;
 	float zMovement;
 	float xRotation;

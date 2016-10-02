@@ -4,29 +4,26 @@ void Scene::Render()
 {
 	camera.moveCamera(xMovement, zMovement);
 	shader.Bind();
-	transform = Transform();
-	//transform.rotation.y = 0.5f;
 
 	carTexture.Bind(0);
-	shader.Update(transform, camera);
+	shader.Update(getInitialCarTransform(), camera);
 	carMesh.Draw();
 
-	transform.scale = glm::vec3(0.25f, 0.25f, 0.25f);
-	transform.position.y = 0.15f;
-
-	transform.position.x = 0.62f;
-
 	tireTexture.Bind(0);
-	shader.Update(transform, camera);
+	shader.Update(getInitialTireTransform(Scene::FRONT_RIGHT), camera);
 	tireMesh.Draw();
 
-	/*transform.rotation.y = 3.0f;
-
-	transform.position.x = -0.62f;
+	tireTexture.Bind(0);
+	shader.Update(getInitialTireTransform(Scene::FRONT_LEFT), camera);
+	tireMesh.Draw();
 
 	tireTexture.Bind(0);
-	shader.Update(transform, camera);
-	tireMesh.Draw();*/
+	shader.Update(getInitialTireTransform(Scene::BACK_RIGHT), camera);
+	tireMesh.Draw();
+
+	tireTexture.Bind(0);
+	shader.Update(getInitialTireTransform(Scene::BACK_LEFT), camera);
+	tireMesh.Draw();
 }
 
 Transform Scene::getInitialCarTransform()
@@ -44,19 +41,21 @@ Transform Scene::getInitialTireTransform(TirePosition tirePosition)
 	switch (tirePosition)
 	{
 	case Scene::FRONT_RIGHT:
-		return Transform();
+		return Transform(glm::vec3(tireX, tireY, -tireZ), glm::vec3(), tireScale);
 		break;
 	case Scene::FRONT_LEFT:
-		return Transform();
+		return Transform(glm::vec3(-tireX, tireY, -tireZ), leftTireRotation, tireScale);
 		break;
 	case Scene::BACK_RIGHT:
-		return Transform();
+		return Transform(glm::vec3(tireX, tireY, tireZ), glm::vec3(), tireScale);
 		break;
 	case Scene::BACK_LEFT:
-		return Transform();
+		return Transform(glm::vec3(-tireX, tireY, tireZ), leftTireRotation, tireScale);
 		break;
 	default:
 		return Transform();
 		break;
 	}
 }
+
+
