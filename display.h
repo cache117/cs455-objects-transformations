@@ -3,7 +3,9 @@
 #include <string>
 #include <iostream>
 #include <SDL2\SDL.h>
-#include <GL/glew.h>
+#include <GL\glew.h>
+#include "scene.h"
+
 class Display
 {
 public:
@@ -15,16 +17,17 @@ public:
 		return m_isClosed;
 	}
 
-	void Update();
+	void Update(Scene& scene);
 
 	virtual ~Display();
 private:
 	Display(const Display& other) {}
 	void operator=(const Display& other) {}
-	void initJoySticks();
 
 	SDL_Window* m_window;
 	SDL_GLContext m_glContext;
 	bool m_isClosed;
+	const float MOVEMENT_AMOUNT = 0.01f;
+	const float ROTATION_AMOUNT = 0.05f;
 };
 

@@ -8,6 +8,8 @@
 class Shader
 {
 public:
+	Shader()
+	{ }
 	Shader(const std::string& fileName);
 
 	void Bind();

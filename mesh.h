@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm\glm.hpp>
-#include <GL/glew.h>
+#include <GL\glew.h>
 #include <vector>
 #include "obj_loader.h"
 
@@ -16,6 +16,8 @@ struct Vertex
 class Mesh
 {
 public:
+	Mesh()
+	{ }
 	Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
 	Mesh(const std::string& fileName);
 
