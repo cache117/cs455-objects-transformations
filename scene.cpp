@@ -38,7 +38,7 @@ Transform Scene::getInitialCarTransform()
 
 Transform Scene::getInitialParkingLotTransform()
 {
-	return Transform(glm::vec3(5.5f, 0, -5.5f), glm::vec3(0, 2.2f, 0));
+	return Transform(glm::vec3(4.2f, 0, -4.8f), glm::vec3(0, 2.1f, 0), glm::vec3(0.8f));
 }
 
 Transform Scene::getInitialTireTransform(TirePosition tirePosition)

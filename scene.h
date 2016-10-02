@@ -116,6 +116,8 @@ private:
 	const float carY = 0.3f;
 
 	Transform getInitialParkingLotTransform();
+	const glm::vec3 parkingLotRotation = glm::vec3(0, 2.2f, 0);
+
 	Transform getInitialTireTransform(TirePosition tirePosition);
 	inline glm::vec3 getTireRotation(TirePosition tirePosition);
 
