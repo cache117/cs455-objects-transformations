@@ -7,41 +7,41 @@ void Scene::Render()
 	shader.Bind();
 
 	carTexture.Bind(0);
-	shader.Update(getInitialCarTransform(), camera);
+	shader.Update(getCarTransform(), camera);
 	carMesh.Draw();
 
 	tireTexture.Bind(0);
-	shader.Update(getInitialTireTransform(Scene::FRONT_RIGHT), camera);
+	shader.Update(getTireTransform(Scene::FRONT_RIGHT), camera);
 	tireMesh.Draw();
 
 	tireTexture.Bind(0);
-	shader.Update(getInitialTireTransform(Scene::FRONT_LEFT), camera);
+	shader.Update(getTireTransform(Scene::FRONT_LEFT), camera);
 	tireMesh.Draw();
 
 	tireTexture.Bind(0);
-	shader.Update(getInitialTireTransform(Scene::BACK_RIGHT), camera);
+	shader.Update(getTireTransform(Scene::BACK_RIGHT), camera);
 	tireMesh.Draw();
 
 	tireTexture.Bind(0);
-	shader.Update(getInitialTireTransform(Scene::BACK_LEFT), camera);
+	shader.Update(getTireTransform(Scene::BACK_LEFT), camera);
 	tireMesh.Draw();
 
 	parkingLotTexture.Bind(0);
-	shader.Update(getInitialParkingLotTransform(), camera);
+	shader.Update(getParkingLotTransform(), camera);
 	parkingLotMesh.Draw();
 }
 
-Transform Scene::getInitialCarTransform()
+Transform Scene::getCarTransform()
 {
 	return Transform();
 }
 
-Transform Scene::getInitialParkingLotTransform()
+Transform Scene::getParkingLotTransform()
 {
-	return Transform(glm::vec3(4.2f, 0, -4.8f), glm::vec3(0, 2.1f, 0), glm::vec3(0.8f));
+	return Transform(parkingLotPosition, parkingLotRotation, parkingLotScale);
 }
 
-Transform Scene::getInitialTireTransform(TirePosition tirePosition)
+Transform Scene::getTireTransform(TirePosition tirePosition)
 {
 	switch (tirePosition)
 	{
@@ -95,14 +95,11 @@ glm::vec3 Scene::getTireRotation(TirePosition tirePosition)
 			break;
 		}
 		break;
-	case Scene::BACK_RIGHT:
-		return rightTireRotation;
-		break;
 	case Scene::BACK_LEFT:
 		return leftTireRotation;
 		break;
 	default:
-		return glm::vec3();
+		return rightTireRotation;
 		break;
 	}
 }
