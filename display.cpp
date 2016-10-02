@@ -63,10 +63,10 @@ void Display::Update(Scene& scene)
 				scene.setZMovement(-MOVEMENT_AMOUNT);
 				break;
 			case SDLK_d:
-				scene.setXMovement(MOVEMENT_AMOUNT);
+				scene.setXMovement(-MOVEMENT_AMOUNT);
 				break;
 			case SDLK_a:
-				scene.setXMovement(-MOVEMENT_AMOUNT);
+				scene.setXMovement(MOVEMENT_AMOUNT);
 				break;
 			case SDLK_i:
 				scene.setXRotation(ROTATION_AMOUNT);
@@ -80,6 +80,11 @@ void Display::Update(Scene& scene)
 			case SDLK_j:
 				scene.setYRotation(-ROTATION_AMOUNT);
 				break;
+			case SDLK_q:
+				scene.setTireOrientation(Scene::TURNED_LEFT);
+				break;
+			case SDLK_e:
+				scene.setTireOrientation(Scene::TURNED_RIGHT);
 			}
 			break;
 		case SDL_KEYUP:
@@ -94,10 +99,10 @@ void Display::Update(Scene& scene)
 					scene.setZMovement(0);
 				break;
 			case SDLK_d:
-				if (scene.getXMovement() == MOVEMENT_AMOUNT)
+				if (scene.getXMovement() == -MOVEMENT_AMOUNT)
 					scene.setXMovement(0);
 			case SDLK_a:
-				if (scene.getXMovement() == -MOVEMENT_AMOUNT)
+				if (scene.getXMovement() == MOVEMENT_AMOUNT)
 					scene.setXMovement(0);
 				break;
 			case SDLK_i:
@@ -116,6 +121,13 @@ void Display::Update(Scene& scene)
 				if (scene.getYRotation() == -ROTATION_AMOUNT)
 					scene.setYRotation(0);
 				break;
+			case SDLK_q:
+				if (scene.getTireOrientation() == Scene::TURNED_LEFT)
+					scene.setTireOrientation(Scene::FORWARD);
+				break;
+			case SDLK_e:
+				if (scene.getTireOrientation() == Scene::TURNED_RIGHT)
+					scene.setTireOrientation(Scene::FORWARD);
 			}
 			break;
 		}

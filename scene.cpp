@@ -3,6 +3,7 @@
 void Scene::Render()
 {
 	camera.moveCamera(xMovement, zMovement);
+	camera.rotateCamera(xRotation, yRotation);
 	shader.Bind();
 
 	carTexture.Bind(0);
@@ -41,19 +42,62 @@ Transform Scene::getInitialTireTransform(TirePosition tirePosition)
 	switch (tirePosition)
 	{
 	case Scene::FRONT_RIGHT:
-		return Transform(glm::vec3(tireX, tireY, -tireZ), glm::vec3(), tireScale);
+		return Transform(glm::vec3(tireX, tireY, -tireZ), getTireRotation(Scene::FRONT_RIGHT), tireScale);
 		break;
 	case Scene::FRONT_LEFT:
-		return Transform(glm::vec3(-tireX, tireY, -tireZ), leftTireRotation, tireScale);
+		return Transform(glm::vec3(-tireX, tireY, -tireZ), getTireRotation(Scene::FRONT_LEFT), tireScale);
 		break;
 	case Scene::BACK_RIGHT:
-		return Transform(glm::vec3(tireX, tireY, tireZ), glm::vec3(), tireScale);
+		return Transform(glm::vec3(tireX, tireY, tireZ), getTireRotation(Scene::BACK_RIGHT), tireScale);
 		break;
 	case Scene::BACK_LEFT:
-		return Transform(glm::vec3(-tireX, tireY, tireZ), leftTireRotation, tireScale);
+		return Transform(glm::vec3(-tireX, tireY, tireZ), getTireRotation(Scene::BACK_LEFT), tireScale);
 		break;
 	default:
 		return Transform();
+		break;
+	}
+}
+
+glm::vec3 Scene::getTireRotation(TirePosition tirePosition)
+{
+	switch (tirePosition)
+	{
+	case Scene::FRONT_RIGHT:
+		switch (tireOrientation)
+		{
+		case Scene::TURNED_RIGHT:
+			return rightTireRotation - frontTireTurned;
+			break;
+		case Scene::TURNED_LEFT:
+			return rightTireRotation + frontTireTurned;
+			break;
+		default:
+			return rightTireRotation;
+			break;
+		}
+		break;
+	case Scene::FRONT_LEFT:
+		switch (tireOrientation)
+		{
+		case Scene::TURNED_RIGHT:
+			return leftTireRotation - frontTireTurned;
+			break;
+		case Scene::TURNED_LEFT:
+			return leftTireRotation + frontTireTurned;
+			break;
+		default:
+			return leftTireRotation;
+			break;
+		}
+		break;
+	case Scene::BACK_RIGHT:
+		return rightTireRotation;
+		break;
+	case Scene::BACK_LEFT:
+		return leftTireRotation;
+		break;
+	default:
 		break;
 	}
 }

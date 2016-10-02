@@ -22,15 +22,33 @@ public:
 		tireTexture("./res/tire.bmp"),
 		/*parkingLotTexture("./res/ParkingLot.bmp"),*/
 		carTexture("./res/car.bmp"),
-		camera(glm::vec3(0, 0, -3), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 500.0f),
+		camera(glm::vec3(0, 0.5f, -3.0f), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 500.0f),
 		transform(),
 		xMovement(0),
-		zMovement(0)
+		zMovement(0),
+		xRotation(0),
+		yRotation(0),
+		tireOrientation(FORWARD)
 	{ }
 
 	virtual ~Scene()
 	{ }
 	void Render();
+
+	enum TirePosition
+	{
+		FRONT_RIGHT,
+		FRONT_LEFT,
+		BACK_RIGHT,
+		BACK_LEFT
+	};
+
+	enum TireOrientation
+	{
+		TURNED_RIGHT,
+		TURNED_LEFT,
+		FORWARD
+	};
 	
 	inline void setXMovement(float movement)
 	{
@@ -71,6 +89,16 @@ public:
 	{
 		return yRotation;
 	}
+
+	inline void setTireOrientation(TireOrientation orientation)
+	{
+		tireOrientation = orientation;
+	}
+
+	inline TireOrientation getTireOrientation()
+	{
+		return tireOrientation;
+	}
 private:
 	Camera camera;
 	Shader shader;
@@ -84,27 +112,25 @@ private:
 	Texture parkingLotTexture;
 	Texture carTexture;
 
-	enum TirePosition
-	{
-		FRONT_RIGHT,
-		FRONT_LEFT,
-		BACK_RIGHT,
-		BACK_LEFT
-	};
-
 	Transform getInitialCarTransform();
 	Transform getInitialParkingLotTransform();
 	Transform getInitialTireTransform(TirePosition tirePosition);
+	inline glm::vec3 getTireRotation(TirePosition tirePosition);
 
 	const glm::vec3 tireScale = glm::vec3(0.25f, 0.25f, 0.25f);
 	const glm::vec3 leftTireRotation = glm::vec3(0, 3.0f, 0);
+	const glm::vec3 rightTireRotation = glm::vec3(0.0f);
+	const float frontTireTurningAngle = 0.75f;
+	const glm::vec3 frontTireTurned = glm::vec3(0, 0.75f, 0);
 	const float tireZ = 0.5f;
-	const float tireX = 0.2f;
-	const float tireY = 0.1f;
+	const float tireX = 0.37f;
+	const float tireY = 0.15f;
 
 	float xMovement;
 	float zMovement;
 	float xRotation;
 	float yRotation;
+
+	TireOrientation tireOrientation;
 };
 
