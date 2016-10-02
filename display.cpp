@@ -40,6 +40,87 @@ Display::~Display()
 	SDL_Quit();
 }
 
+void Display::manageKeyPress(Scene& scene, SDL_Keycode key)
+{
+	switch (key)
+	{
+	case SDLK_w:
+		scene.setZMovement(MOVEMENT_AMOUNT);
+		break;
+	case SDLK_s:
+		scene.setZMovement(-MOVEMENT_AMOUNT);
+		break;
+	case SDLK_d:
+		scene.setXMovement(-MOVEMENT_AMOUNT);
+		break;
+	case SDLK_a:
+		scene.setXMovement(MOVEMENT_AMOUNT);
+		break;
+	case SDLK_i:
+		scene.setXRotation(ROTATION_AMOUNT);
+		break;
+	case SDLK_k:
+		scene.setXRotation(-ROTATION_AMOUNT);
+		break;
+	case SDLK_l:
+		scene.setYRotation(ROTATION_AMOUNT);
+		break;
+	case SDLK_j:
+		scene.setYRotation(-ROTATION_AMOUNT);
+		break;
+	case SDLK_q:
+		scene.setTireOrientation(Scene::TURNED_LEFT);
+		break;
+	case SDLK_e:
+		scene.setTireOrientation(Scene::TURNED_RIGHT);
+	}
+}
+
+void Display::manageKeyRelease(Scene& scene, SDL_Keycode key)
+{
+	switch (key)
+	{
+	case SDLK_w:
+		if (scene.getZMovement() == MOVEMENT_AMOUNT)
+			scene.setZMovement(0);
+		break;
+	case SDLK_s:
+		if (scene.getZMovement() == -MOVEMENT_AMOUNT)
+			scene.setZMovement(0);
+		break;
+	case SDLK_d:
+		if (scene.getXMovement() == -MOVEMENT_AMOUNT)
+			scene.setXMovement(0);
+	case SDLK_a:
+		if (scene.getXMovement() == MOVEMENT_AMOUNT)
+			scene.setXMovement(0);
+		break;
+	case SDLK_i:
+		if (scene.getXRotation() == ROTATION_AMOUNT)
+			scene.setXRotation(0);
+		break;
+	case SDLK_k:
+		if (scene.getXRotation() == -ROTATION_AMOUNT)
+			scene.setXRotation(0);
+		break;
+	case SDLK_l:
+		if (scene.getYRotation() == ROTATION_AMOUNT)
+			scene.setYRotation(0);
+		break;
+	case SDLK_j:
+		if (scene.getYRotation() == -ROTATION_AMOUNT)
+			scene.setYRotation(0);
+		break;
+	case SDLK_q:
+		if (scene.getTireOrientation() == Scene::TURNED_LEFT)
+			scene.setTireOrientation(Scene::FORWARD);
+		break;
+	case SDLK_e:
+		if (scene.getTireOrientation() == Scene::TURNED_RIGHT)
+			scene.setTireOrientation(Scene::FORWARD);
+	}
+}
+
 void Display::Update(Scene& scene)
 {
 	SDL_GL_SwapWindow(m_window);
@@ -54,81 +135,10 @@ void Display::Update(Scene& scene)
 			m_isClosed = true;
 			break;
 		case SDL_KEYDOWN:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_w:
-				scene.setZMovement(MOVEMENT_AMOUNT);
-				break;
-			case SDLK_s:
-				scene.setZMovement(-MOVEMENT_AMOUNT);
-				break;
-			case SDLK_d:
-				scene.setXMovement(-MOVEMENT_AMOUNT);
-				break;
-			case SDLK_a:
-				scene.setXMovement(MOVEMENT_AMOUNT);
-				break;
-			case SDLK_i:
-				scene.setXRotation(ROTATION_AMOUNT);
-				break;
-			case SDLK_k:
-				scene.setXRotation(-ROTATION_AMOUNT);
-				break;
-			case SDLK_l:
-				scene.setYRotation(ROTATION_AMOUNT);
-				break;
-			case SDLK_j:
-				scene.setYRotation(-ROTATION_AMOUNT);
-				break;
-			case SDLK_q:
-				scene.setTireOrientation(Scene::TURNED_LEFT);
-				break;
-			case SDLK_e:
-				scene.setTireOrientation(Scene::TURNED_RIGHT);
-			}
+			manageKeyPress(scene, event.key.keysym.sym);
 			break;
 		case SDL_KEYUP:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_w:
-				if (scene.getZMovement() == MOVEMENT_AMOUNT)
-					scene.setZMovement(0);
-				break;
-			case SDLK_s:
-				if (scene.getZMovement() == -MOVEMENT_AMOUNT)
-					scene.setZMovement(0);
-				break;
-			case SDLK_d:
-				if (scene.getXMovement() == -MOVEMENT_AMOUNT)
-					scene.setXMovement(0);
-			case SDLK_a:
-				if (scene.getXMovement() == MOVEMENT_AMOUNT)
-					scene.setXMovement(0);
-				break;
-			case SDLK_i:
-				if (scene.getXRotation() == ROTATION_AMOUNT)
-					scene.setXRotation(0);
-				break;
-			case SDLK_k:
-				if (scene.getXRotation() == -ROTATION_AMOUNT)
-					scene.setXRotation(0);
-				break;
-			case SDLK_l:
-				if (scene.getYRotation() == ROTATION_AMOUNT)
-					scene.setYRotation(0);
-				break;
-			case SDLK_j:
-				if (scene.getYRotation() == -ROTATION_AMOUNT)
-					scene.setYRotation(0);
-				break;
-			case SDLK_q:
-				if (scene.getTireOrientation() == Scene::TURNED_LEFT)
-					scene.setTireOrientation(Scene::FORWARD);
-				break;
-			case SDLK_e:
-				if (scene.getTireOrientation() == Scene::TURNED_RIGHT)
-					scene.setTireOrientation(Scene::FORWARD);
-			}
+			manageKeyRelease(scene, event.key.keysym.sym);
 			break;
 		}
 	}

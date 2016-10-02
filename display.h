@@ -21,8 +21,8 @@ public:
 
 	virtual ~Display();
 private:
-	Display(const Display& other) {}
-	void operator=(const Display& other) {}
+	void manageKeyPress(Scene& scene, SDL_Keycode key);
+	void manageKeyRelease(Scene& scene, SDL_Keycode key);
 
 	SDL_Window* m_window;
 	SDL_GLContext m_glContext;

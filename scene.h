@@ -17,10 +17,10 @@ class Scene
 public:
 	Scene() : shader("./res/basicShader"),
 		tireMesh("./res/tire.obj"),
-		/*parkingLotMesh("./res/ParkingLot.obj"),*/
+		parkingLotMesh("./res/ParkingLot.obj"),
 		carMesh("./res/car.obj"),
 		tireTexture("./res/tire.bmp"),
-		/*parkingLotTexture("./res/ParkingLot.bmp"),*/
+		parkingLotTexture("./res/ParkingLot.bmp"),
 		carTexture("./res/car.bmp"),
 		camera(glm::vec3(0, 0.5f, -3.0f), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 500.0f),
 		transform(),
@@ -113,6 +113,8 @@ private:
 	Texture carTexture;
 
 	Transform getInitialCarTransform();
+	const float carY = 0.3f;
+
 	Transform getInitialParkingLotTransform();
 	Transform getInitialTireTransform(TirePosition tirePosition);
 	inline glm::vec3 getTireRotation(TirePosition tirePosition);
@@ -125,6 +127,7 @@ private:
 	const float tireZ = 0.5f;
 	const float tireX = 0.37f;
 	const float tireY = 0.15f;
+
 
 	float xMovement;
 	float zMovement;
