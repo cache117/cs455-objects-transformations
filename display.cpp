@@ -63,10 +63,10 @@ void Display::manageKeyPress(Scene& scene, SDL_Keycode key)
 		scene.setXRotation(-ROTATION_AMOUNT);
 		break;
 	case SDLK_l:
-		scene.setYRotation(ROTATION_AMOUNT);
+		scene.setYRotation(-ROTATION_AMOUNT);
 		break;
 	case SDLK_j:
-		scene.setYRotation(-ROTATION_AMOUNT);
+		scene.setYRotation(ROTATION_AMOUNT);
 		break;
 	case SDLK_q:
 		scene.setTireOrientation(Scene::TURNED_LEFT);
@@ -104,11 +104,11 @@ void Display::manageKeyRelease(Scene& scene, SDL_Keycode key)
 			scene.setXRotation(0);
 		break;
 	case SDLK_l:
-		if (scene.getYRotation() == ROTATION_AMOUNT)
+		if (scene.getYRotation() == -ROTATION_AMOUNT)
 			scene.setYRotation(0);
 		break;
 	case SDLK_j:
-		if (scene.getYRotation() == -ROTATION_AMOUNT)
+		if (scene.getYRotation() == ROTATION_AMOUNT)
 			scene.setYRotation(0);
 		break;
 	case SDLK_q:

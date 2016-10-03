@@ -27,7 +27,7 @@ private:
 	SDL_Window* m_window;
 	SDL_GLContext m_glContext;
 	bool m_isClosed;
-	const float MOVEMENT_AMOUNT = 0.01f;
-	const float ROTATION_AMOUNT = 0.05f;
+	const float MOVEMENT_AMOUNT = 0.007f;
+	const float ROTATION_AMOUNT = 0.002f;
 };
 

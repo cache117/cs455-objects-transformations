@@ -3,6 +3,7 @@
 #include <GL\glew.h>
 #include <SDL2\SDL.h>
 #include <iostream>
+#include <cmath>
 #include "mesh.h"
 #include "shader.h"
 #include "texture.h"
@@ -23,6 +24,8 @@ public:
 		tireMesh("./res/tire.obj"),
 		parkingLotMesh("./res/ParkingLot.obj"),
 		parkingLotTexture("./res/ParkingLot.bmp"),
+		humanoidMesh("./res/monster.obj"),
+		brickTexture("./res/bricks.jpg"),
 		xMovement(0),
 		zMovement(0),
 		xRotation(0),
@@ -110,13 +113,14 @@ private:
 	Mesh tireMesh;
 	Mesh parkingLotMesh;
 	Mesh carMesh;
+	Mesh humanoidMesh;
 
 	Texture tireTexture;
 	Texture parkingLotTexture;
 	Texture carTexture;
+	Texture brickTexture;
 
 	Transform getCarTransform();
-	const float carY = 0.3f;
 
 	Transform getParkingLotTransform();
 	const glm::vec3 parkingLotPosition = glm::vec3(4.2f, 0, -4.8f);
@@ -125,14 +129,17 @@ private:
 
 	Transform getTireTransform(TirePosition tirePosition);
 	inline glm::vec3 getTireRotation(TirePosition tirePosition);
-	const glm::vec3 tireScale = glm::vec3(0.25f, 0.25f, 0.25f);
-	const glm::vec3 leftTireRotation = glm::vec3(0, 3.0f, 0);
+	const glm::vec3 tireScale = glm::vec3(0.25f);
+	const glm::vec3 leftTireRotation = glm::vec3(0, (float)M_PI, 0);
 	const glm::vec3 rightTireRotation = glm::vec3(0.0f);
-	const float tireZ = 0.5f;
-	const float tireX = 0.37f;
+	const float frontTireZ = -0.53f;
+	const float backTireZ = 0.47f;
+	const float tireX = 0.35f;
 	const float tireY = 0.15f;
 	TireOrientation tireOrientation;
 	const float frontTireTurningAngle = 0.75f;
 	const glm::vec3 frontTireTurned = glm::vec3(0, 0.75f, 0);
+
+	Transform getHumanoidTransform();
 };
 

@@ -3,7 +3,8 @@
 void Scene::Render()
 {
 	camera.moveCamera(xMovement, zMovement);
-	camera.rotateCamera(xRotation, yRotation);
+	camera.pitch(xRotation);
+	camera.yaw(yRotation);
 	shader.Bind();
 
 	carTexture.Bind(0);
@@ -25,10 +26,14 @@ void Scene::Render()
 	tireTexture.Bind(0);
 	shader.Update(getTireTransform(Scene::BACK_LEFT), camera);
 	tireMesh.Draw();
-
+	
 	parkingLotTexture.Bind(0);
 	shader.Update(getParkingLotTransform(), camera);
 	parkingLotMesh.Draw();
+
+	brickTexture.Bind(0);
+	shader.Update(getHumanoidTransform(), camera);
+	humanoidMesh.Draw();
 }
 
 Transform Scene::getCarTransform()
@@ -46,21 +51,26 @@ Transform Scene::getTireTransform(TirePosition tirePosition)
 	switch (tirePosition)
 	{
 	case Scene::FRONT_RIGHT:
-		return Transform(glm::vec3(tireX, tireY, -tireZ), getTireRotation(Scene::FRONT_RIGHT), tireScale);
+		return Transform(glm::vec3(tireX, tireY, frontTireZ), getTireRotation(Scene::FRONT_RIGHT), tireScale);
 		break;
 	case Scene::FRONT_LEFT:
-		return Transform(glm::vec3(-tireX, tireY, -tireZ), getTireRotation(Scene::FRONT_LEFT), tireScale);
+		return Transform(glm::vec3(-tireX, tireY, frontTireZ), getTireRotation(Scene::FRONT_LEFT), tireScale);
 		break;
 	case Scene::BACK_RIGHT:
-		return Transform(glm::vec3(tireX, tireY, tireZ), getTireRotation(Scene::BACK_RIGHT), tireScale);
+		return Transform(glm::vec3(tireX, tireY, backTireZ), getTireRotation(Scene::BACK_RIGHT), tireScale);
 		break;
 	case Scene::BACK_LEFT:
-		return Transform(glm::vec3(-tireX, tireY, tireZ), getTireRotation(Scene::BACK_LEFT), tireScale);
+		return Transform(glm::vec3(-tireX, tireY, backTireZ), getTireRotation(Scene::BACK_LEFT), tireScale);
 		break;
 	default:
 		return Transform();
 		break;
 	}
+}
+
+Transform Scene::getHumanoidTransform()
+{
+	return Transform(glm::vec3(0, 0.67f, 0.05f), glm::vec3(0, M_PI, 0), glm::vec3(0.05f));
 }
 
 glm::vec3 Scene::getTireRotation(TirePosition tirePosition)
