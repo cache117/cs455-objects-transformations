@@ -12,6 +12,7 @@
 
 #define WIDTH 800
 #define HEIGHT 600
+#define LOAD_LARGE
 
 class Scene
 {
@@ -22,10 +23,12 @@ public:
 		carTexture("./res/car.bmp"),
 		tireTexture("./res/tire.bmp"),
 		tireMesh("./res/tire.obj"),
+#ifdef LOAD_LARGE
 		parkingLotMesh("./res/ParkingLot.obj"),
 		parkingLotTexture("./res/ParkingLot.bmp"),
 		humanoidMesh("./res/monster.obj"),
 		brickTexture("./res/bricks.jpg"),
+#endif // LOAD_LARGE
 		xMovement(0),
 		zMovement(0),
 		xRotation(0),

@@ -26,7 +26,7 @@ void Scene::Render()
 	tireTexture.Bind(0);
 	shader.Update(getTireTransform(Scene::BACK_LEFT), camera);
 	tireMesh.Draw();
-	
+#ifdef LOAD_LARGE 
 	parkingLotTexture.Bind(0);
 	shader.Update(getParkingLotTransform(), camera);
 	parkingLotMesh.Draw();
@@ -34,6 +34,7 @@ void Scene::Render()
 	brickTexture.Bind(0);
 	shader.Update(getHumanoidTransform(), camera);
 	humanoidMesh.Draw();
+#endif // LOAD_ALL
 }
 
 Transform Scene::getCarTransform()
