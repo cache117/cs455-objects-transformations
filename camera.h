@@ -5,7 +5,7 @@
 #include <cmath>
 
 #define LOCKED_Y_MOVEMENT
-#define USE_CUSTOM_MATRICES
+#define USE_CUSTOM_CAMERA_MATRICES
 
 class Camera
 {
@@ -14,7 +14,7 @@ public:
 	{ }
 	Camera(const glm::vec3& pos, float fov, float aspect, float zNear, float zFar)
 	{
-		this->perspective = glm::perspective(fov, aspect, zNear, zFar);
+		this->perspective = buildPerspectiveMatrix(fov, aspect, zNear, zFar);
 		this->position = pos;
 		this->forward = glm::vec3(0, 0, 1);
 		this->up = glm::vec3(0, 1, 0);
@@ -22,28 +22,34 @@ public:
 
 	inline glm::mat4 GetView() const
 	{
-		/*glm::mat4 translateToOrigin = glm::mat4(1.0f);
-		translateToOrigin[3][0] = -position.x;
-		translateToOrigin[3][1] = -position.y;
-		translateToOrigin[3][2] = -position.z;
-
-		glm::vec3 n = glm::normalize(position - forward);
-		glm::vec3 u = glm::normalize(glm::cross(up, n));
-		glm::vec3 v = glm::normalize(glm::cross(n, u));
-
-		glm::mat4 changeOfBasis = glm::mat4(1.0f);
-		changeOfBasis[0][0] = u.x;
-		changeOfBasis[1][0] = u.y;
-		changeOfBasis[2][0] = u.z;
-		changeOfBasis[0][1] = v.x;
-		changeOfBasis[1][1] = v.y;
-		changeOfBasis[2][1] = v.z;
-		changeOfBasis[0][2] = n.x;
-		changeOfBasis[1][2] = n.y;
-		changeOfBasis[2][2] = n.z;
-		
-		return changeOfBasis * translateToOrigin;*/
+#ifndef USE_CUSTOM_CAMERA_MATRICES 
 		return glm::lookAt(position, position + forward, up);
+		
+#else
+		glm::vec3 eye = position;
+		glm::vec3 center = position + forward;
+		// up is up. No need to redefine;
+
+		glm::vec3  lookAt = glm::normalize(center - eye);
+		glm::vec3  lookUp = glm::normalize(up);
+		glm::vec3  lookRight = glm::normalize(glm::cross(lookAt, lookUp));
+		lookUp = cross(lookRight, lookAt);
+
+		glm::mat4 result(1.0f);
+		result[0][0] = lookRight.x;
+		result[1][0] = lookRight.y;
+		result[2][0] = lookRight.z;
+		result[0][1] = lookUp.x;
+		result[1][1] = lookUp.y;
+		result[2][1] = lookUp.z;
+		result[0][2] = -lookAt.x;
+		result[1][2] = -lookAt.y;
+		result[2][2] = -lookAt.z;
+		result[3][0] = -glm::dot(lookRight, position);
+		result[3][1] = -glm::dot(lookUp, position);
+		result[3][2] = glm::dot(lookAt, position);
+		return result;
+#endif // USE_CUSTOM_CAMERA_MATRICES
 	}
 
 	inline glm::mat4 GetViewProjection() const
@@ -72,9 +78,8 @@ public:
 
 	inline void yaw(float angle)
 	{
+#ifndef USE_CUSTOM_CAMERA_MATRICES
 		static const glm::vec3 UP(0.0f, 1.0f, 0.0f);
-
-#ifndef USE_CUSTOM_MATRICES
 		glm::mat4 rotation = glm::rotate(angle, UP);
 #else
 		glm::mat4 rotation = glm::mat4(1.0f);
@@ -92,5 +97,22 @@ private:
 	glm::vec3 position;
 	glm::vec3 forward;
 	glm::vec3 up;
+
+	glm::mat4 buildPerspectiveMatrix(float fov, float aspect, float zNear, float zFar)
+	{
+#ifndef USE_CUSTOM_CAMERA_MATRICES
+		return glm::perspective(fov, aspect, zNear, zFar);
+#else
+		//return glm::perspective(fov, aspect, zNear, zFar);
+		float f = 1 / tan(fov / 2);
+		glm::mat4 perspectiveProjection = glm::mat4();
+		perspectiveProjection[0][0] = f / aspect;
+		perspectiveProjection[1][1] = f;
+		perspectiveProjection[2][2] = (zFar + zNear) / (zNear - zFar);
+		perspectiveProjection[2][3] = -1;
+		perspectiveProjection[3][2] = (2 * zNear * zFar) / (zNear - zFar);
+		return perspectiveProjection;
+#endif // !USE_CUSTOM_CAMERA_MATRICES
+	}
 };
 

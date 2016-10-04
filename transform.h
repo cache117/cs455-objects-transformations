@@ -3,7 +3,7 @@
 #include <glm\glm.hpp>
 #include <glm\gtx\transform.hpp>
 
-#define USE_CUSTOM_MATRICES
+#define USE_CUSTOM_OBJECT_MATRICES
 
 struct Transform
 {
@@ -14,7 +14,7 @@ struct Transform
 
 	inline glm::mat4 GetModel() const
 	{
-#ifndef USE_CUSTOM_MATRICES
+#ifndef USE_CUSTOM_OBJECT_MATRICES
 		glm::mat4 posMatrix = glm::translate(position);
 		glm::mat4 rotXMatrix = glm::rotate(rotation.x, glm::vec3(1, 0, 0));
 		glm::mat4 rotYMatrix = glm::rotate(rotation.y, glm::vec3(0, 1, 0));
@@ -48,7 +48,7 @@ struct Transform
 		scaleMatrix[0][0] = scale.x;
 		scaleMatrix[1][1] = scale.y;
 		scaleMatrix[2][2] = scale.z;
-#endif // !USE_CUSTOM_MATRICES
+#endif // !USE_CUSTOM_OBJECT_MATRICES
 
 		glm::mat4 rotMatrix = rotZMatrix * rotYMatrix * rotXMatrix;
 		return posMatrix * rotMatrix * scaleMatrix;
