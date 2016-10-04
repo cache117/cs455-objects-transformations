@@ -65,7 +65,7 @@ public:
 		position += forward * z;
 		position += glm::cross(up, forward) * x;
 #ifdef LOCKED_Y_MOVEMENT
-		position.y = 0.5f;
+		position.y = 0.6f;
 #endif // !LOCKED_Y_MOVEMENT
 	}
 
@@ -74,6 +74,9 @@ public:
 		glm::vec3 right = glm::normalize(glm::cross(up, forward));
 		forward = glm::vec3(glm::normalize(glm::rotate(angle, right) * glm::vec4(forward, 0.0f)));
 		up = glm::normalize(glm::cross(forward, right));
+#ifdef LOCKED_Y_MOVEMENT
+		position.y = 0.6f;
+#endif // !LOCKED_Y_MOVEMENT
 	}
 
 	inline void yaw(float angle)
@@ -91,6 +94,9 @@ public:
 
 		forward = glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0f)));
 		up = glm::vec3(glm::normalize(rotation * glm::vec4(up, 0.0f)));
+#ifdef LOCKED_Y_MOVEMENT
+		position.y = 0.6f;
+#endif // !LOCKED_Y_MOVEMENT
 	}
 private:
 	glm::mat4 perspective;
