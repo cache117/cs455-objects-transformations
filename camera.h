@@ -4,6 +4,9 @@
 #include <glm\gtx\transform.hpp>
 #include <cmath>
 
+#define LOCKED_Y_MOVEMENT
+#define USE_CUSTOM_MATRICES
+
 class Camera
 {
 public:
@@ -55,6 +58,9 @@ public:
 	{
 		position += forward * z;
 		position += glm::cross(up, forward) * x;
+#ifdef LOCKED_Y_MOVEMENT
+		position.y = 0.5f;
+#endif // !LOCKED_Y_MOVEMENT
 	}
 
 	inline void pitch(float angle)
@@ -68,7 +74,15 @@ public:
 	{
 		static const glm::vec3 UP(0.0f, 1.0f, 0.0f);
 
+#ifndef USE_CUSTOM_MATRICES
 		glm::mat4 rotation = glm::rotate(angle, UP);
+#else
+		glm::mat4 rotation = glm::mat4(1.0f);
+		rotation[0][0] = cos(angle);
+		rotation[0][2] = -sin(angle);
+		rotation[2][0] = sin(angle);
+		rotation[2][2] = cos(angle);
+#endif // !USE_CUSTOM_MATRICES
 
 		forward = glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0f)));
 		up = glm::vec3(glm::normalize(rotation * glm::vec4(up, 0.0f)));
