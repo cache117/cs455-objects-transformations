@@ -65,7 +65,7 @@ public:
 		position += forward * z;
 		position += glm::cross(up, forward) * x;
 #ifdef LOCKED_Y_MOVEMENT
-		position.y = 0.6f;
+		position.y = CAMERA_HEIGHT;
 #endif // !LOCKED_Y_MOVEMENT
 	}
 
@@ -75,7 +75,7 @@ public:
 		forward = glm::vec3(glm::normalize(glm::rotate(angle, right) * glm::vec4(forward, 0.0f)));
 		up = glm::normalize(glm::cross(forward, right));
 #ifdef LOCKED_Y_MOVEMENT
-		position.y = 0.6f;
+		position.y = CAMERA_HEIGHT;
 #endif // !LOCKED_Y_MOVEMENT
 	}
 
@@ -95,7 +95,7 @@ public:
 		forward = glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0f)));
 		up = glm::vec3(glm::normalize(rotation * glm::vec4(up, 0.0f)));
 #ifdef LOCKED_Y_MOVEMENT
-		position.y = 0.6f;
+		position.y = CAMERA_HEIGHT;
 #endif // !LOCKED_Y_MOVEMENT
 	}
 private:
@@ -103,6 +103,7 @@ private:
 	glm::vec3 position;
 	glm::vec3 forward;
 	glm::vec3 up;
+	const float CAMERA_HEIGHT = 0.6f;
 
 	glm::mat4 buildPerspectiveMatrix(float fov, float aspect, float zNear, float zFar)
 	{
