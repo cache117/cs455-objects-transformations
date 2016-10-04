@@ -19,6 +19,27 @@ public:
 
 	inline glm::mat4 GetView() const
 	{
+		/*glm::mat4 translateToOrigin = glm::mat4(1.0f);
+		translateToOrigin[3][0] = -position.x;
+		translateToOrigin[3][1] = -position.y;
+		translateToOrigin[3][2] = -position.z;
+
+		glm::vec3 n = glm::normalize(position - forward);
+		glm::vec3 u = glm::normalize(glm::cross(up, n));
+		glm::vec3 v = glm::normalize(glm::cross(n, u));
+
+		glm::mat4 changeOfBasis = glm::mat4(1.0f);
+		changeOfBasis[0][0] = u.x;
+		changeOfBasis[1][0] = u.y;
+		changeOfBasis[2][0] = u.z;
+		changeOfBasis[0][1] = v.x;
+		changeOfBasis[1][1] = v.y;
+		changeOfBasis[2][1] = v.z;
+		changeOfBasis[0][2] = n.x;
+		changeOfBasis[1][2] = n.y;
+		changeOfBasis[2][2] = n.z;
+		
+		return changeOfBasis * translateToOrigin;*/
 		return glm::lookAt(position, position + forward, up);
 	}
 
