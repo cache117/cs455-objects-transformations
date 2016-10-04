@@ -2,7 +2,6 @@
 
 #include <GL\glew.h>
 #include <SDL2\SDL.h>
-#include <iostream>
 #include <cmath>
 #include "mesh.h"
 #include "shader.h"
@@ -140,7 +139,6 @@ private:
 	const float tireX = 0.35f;
 	const float tireY = 0.15f;
 	TireOrientation tireOrientation;
-	const float frontTireTurningAngle = 0.75f;
 	const glm::vec3 frontTireTurned = glm::vec3(0, 0.75f, 0);
 
 	Transform getHumanoidTransform();
