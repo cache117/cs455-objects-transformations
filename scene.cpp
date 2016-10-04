@@ -34,7 +34,7 @@ void Scene::Render()
 	brickTexture.Bind(0);
 	shader.Update(getHumanoidTransform(), camera);
 	humanoidMesh.Draw();
-#endif // LOAD_ALL
+#endif // LOAD_LARGE
 }
 
 Transform Scene::getCarTransform()
