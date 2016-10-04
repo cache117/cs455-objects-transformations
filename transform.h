@@ -25,7 +25,7 @@ struct Transform
 		posMatrix[3][0] = position.x;
 		posMatrix[3][1] = position.y;
 		posMatrix[3][2] = position.z;
-#endif // !USE_CUSTOM_MATRICES
+		//
 		glm::mat4 rotXMatrix = glm::mat4(1.0f);
 		rotXMatrix[1][1] = cos(rotation.x);
 		rotXMatrix[1][2] = sin(rotation.x);
@@ -48,6 +48,7 @@ struct Transform
 		scaleMatrix[0][0] = scale.x;
 		scaleMatrix[1][1] = scale.y;
 		scaleMatrix[2][2] = scale.z;
+#endif // !USE_CUSTOM_MATRICES
 
 		glm::mat4 rotMatrix = rotZMatrix * rotYMatrix * rotXMatrix;
 		return posMatrix * rotMatrix * scaleMatrix;
