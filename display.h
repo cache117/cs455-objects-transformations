@@ -10,19 +10,18 @@ class Display
 {
 public:
 	Display(int width, int height, const std::string& title);
+	virtual ~Display();
 
 	void Clear(float r, float g, float b, float a);
+	void Update(Scene& scene);
+
 	inline bool isClosed()
 	{
 		return m_isClosed;
 	}
-
-	void Update(Scene& scene);
-
-	virtual ~Display();
 private:
-	void manageKeyPress(Scene& scene, SDL_Keycode key);
-	void manageKeyRelease(Scene& scene, SDL_Keycode key);
+	void manageKeyPress(Scene& scene, const SDL_Keycode& key);
+	void manageKeyRelease(Scene& scene, const SDL_Keycode& key);
 
 	SDL_Window* m_window;
 	SDL_GLContext m_glContext;

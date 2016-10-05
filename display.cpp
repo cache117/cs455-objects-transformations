@@ -40,7 +40,7 @@ Display::~Display()
 	SDL_Quit();
 }
 
-void Display::manageKeyPress(Scene& scene, SDL_Keycode key)
+void Display::manageKeyPress(Scene& scene, const SDL_Keycode& key)
 {
 	switch (key)
 	{
@@ -76,7 +76,7 @@ void Display::manageKeyPress(Scene& scene, SDL_Keycode key)
 	}
 }
 
-void Display::manageKeyRelease(Scene& scene, SDL_Keycode key)
+void Display::manageKeyRelease(Scene& scene, const SDL_Keycode& key)
 {
 	switch (key)
 	{

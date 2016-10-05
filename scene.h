@@ -34,9 +34,9 @@ public:
 		yRotation(0),
 		tireOrientation(FORWARD)
 	{ }
-
 	virtual ~Scene()
 	{ }
+
 	void Render();
 
 	enum TirePosition
@@ -59,17 +59,17 @@ public:
 		xMovement = movement;
 	}
 
+	inline float getXMovement() const
+	{
+		return xMovement;
+	}
+
 	inline void setZMovement(float movement)
 	{
 		zMovement = movement;
 	}
 
-	inline float getXMovement()
-	{
-		return xMovement;
-	}
-
-	inline float getZMovement()
+	inline float getZMovement() const
 	{
 		return zMovement;
 	}
@@ -79,27 +79,27 @@ public:
 		xRotation = rotation;
 	}
 
+	inline float getXRotation() const
+	{
+		return xRotation;
+	}
+
 	inline void setYRotation(float rotation)
 	{
 		yRotation = rotation;
 	}
 
-	inline float getXRotation()
-	{
-		return xRotation;
-	}
-
-	inline float getYRotation()
+	inline float getYRotation() const
 	{
 		return yRotation;
 	}
 
-	inline void setTireOrientation(TireOrientation orientation)
+	inline void setTireOrientation(const TireOrientation& orientation)
 	{
 		tireOrientation = orientation;
 	}
 
-	inline TireOrientation getTireOrientation()
+	inline TireOrientation getTireOrientation() const
 	{
 		return tireOrientation;
 	}
@@ -122,25 +122,28 @@ private:
 	Texture carTexture;
 	Texture brickTexture;
 
-	Transform getCarTransform();
+	Transform getCarTransform() const;
 
-	Transform getParkingLotTransform();
-	const glm::vec3 parkingLotPosition = glm::vec3(4.2f, 0, -4.8f);
-	const glm::vec3 parkingLotRotation = glm::vec3(0, 2.1f, 0);
-	const glm::vec3 parkingLotScale = glm::vec3(0.8f);
+	Transform getParkingLotTransform() const;
+	const glm::vec3 PARKING_LOT_POSITION = glm::vec3(4.2f, 0, -4.8f);
+	const glm::vec3 PARKING_LOT_ROTATION = glm::vec3(0, 2.1f, 0);
+	const glm::vec3 PARKING_LOT_SCALE = glm::vec3(0.8f);
 
-	Transform getTireTransform(TirePosition tirePosition);
-	inline glm::vec3 getTireRotation(TirePosition tirePosition);
-	const glm::vec3 tireScale = glm::vec3(0.25f);
-	const glm::vec3 leftTireRotation = glm::vec3(0, (float)M_PI, 0);
-	const glm::vec3 rightTireRotation = glm::vec3(0.0f);
-	const float frontTireZ = -0.53f;
-	const float backTireZ = 0.47f;
-	const float tireX = 0.35f;
-	const float tireY = 0.15f;
+	Transform getTireTransform(const TirePosition& tirePosition) const;
+	inline glm::vec3 getTireRotation(const TirePosition& tirePosition) const;
+	const glm::vec3 TIRE_SCALE = glm::vec3(0.25f);
+	const glm::vec3 LEFT_TIRE_ROTATION = glm::vec3(0, (float)M_PI, 0);
+	const glm::vec3 RIGHT_TIRE_ROTATION = glm::vec3(0.0f);
+	const float FRONT_TIRE_Z = -0.53f;
+	const float BACK_TIRE_Z = 0.47f;
+	const float TIRE_X = 0.35f;
+	const float TIRE_Y = 0.15f;
 	TireOrientation tireOrientation;
-	const glm::vec3 frontTireTurned = glm::vec3(0, 0.75f, 0);
+	const glm::vec3 FRONT_TIRE_TURNED = glm::vec3(0, 0.75f, 0);
 
-	Transform getHumanoidTransform();
+	Transform getHumanoidTransform() const;
+	const glm::vec3 HUMANOID_POSITION = glm::vec3(0, 0.67f, 0.05f);
+	const glm::vec3 HUMANOID_ROTATION = glm::vec3(0, M_PI, 0);
+	const glm::vec3 HUMANOID_SCALE = glm::vec3(0.05f);
 };
 

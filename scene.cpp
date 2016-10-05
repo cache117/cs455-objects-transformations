@@ -37,31 +37,31 @@ void Scene::Render()
 #endif // LOAD_LARGE
 }
 
-Transform Scene::getCarTransform()
+Transform Scene::getCarTransform() const
 {
 	return Transform();
 }
 
-Transform Scene::getParkingLotTransform()
+Transform Scene::getParkingLotTransform() const
 {
-	return Transform(parkingLotPosition, parkingLotRotation, parkingLotScale);
+	return Transform(PARKING_LOT_POSITION, PARKING_LOT_ROTATION, PARKING_LOT_SCALE);
 }
 
-Transform Scene::getTireTransform(TirePosition tirePosition)
+Transform Scene::getTireTransform(const TirePosition& tirePosition) const
 {
 	switch (tirePosition)
 	{
 	case Scene::FRONT_RIGHT:
-		return Transform(glm::vec3(tireX, tireY, frontTireZ), getTireRotation(Scene::FRONT_RIGHT), tireScale);
+		return Transform(glm::vec3(TIRE_X, TIRE_Y, FRONT_TIRE_Z), getTireRotation(Scene::FRONT_RIGHT), TIRE_SCALE);
 		break;
 	case Scene::FRONT_LEFT:
-		return Transform(glm::vec3(-tireX, tireY, frontTireZ), getTireRotation(Scene::FRONT_LEFT), tireScale);
+		return Transform(glm::vec3(-TIRE_X, TIRE_Y, FRONT_TIRE_Z), getTireRotation(Scene::FRONT_LEFT), TIRE_SCALE);
 		break;
 	case Scene::BACK_RIGHT:
-		return Transform(glm::vec3(tireX, tireY, backTireZ), getTireRotation(Scene::BACK_RIGHT), tireScale);
+		return Transform(glm::vec3(TIRE_X, TIRE_Y, BACK_TIRE_Z), getTireRotation(Scene::BACK_RIGHT), TIRE_SCALE);
 		break;
 	case Scene::BACK_LEFT:
-		return Transform(glm::vec3(-tireX, tireY, backTireZ), getTireRotation(Scene::BACK_LEFT), tireScale);
+		return Transform(glm::vec3(-TIRE_X, TIRE_Y, BACK_TIRE_Z), getTireRotation(Scene::BACK_LEFT), TIRE_SCALE);
 		break;
 	default:
 		return Transform();
@@ -69,12 +69,12 @@ Transform Scene::getTireTransform(TirePosition tirePosition)
 	}
 }
 
-Transform Scene::getHumanoidTransform()
+Transform Scene::getHumanoidTransform() const
 {
-	return Transform(glm::vec3(0, 0.67f, 0.05f), glm::vec3(0, M_PI, 0), glm::vec3(0.05f));
+	return Transform(HUMANOID_POSITION, HUMANOID_ROTATION, HUMANOID_SCALE);
 }
 
-glm::vec3 Scene::getTireRotation(TirePosition tirePosition)
+glm::vec3 Scene::getTireRotation(const TirePosition& tirePosition) const
 {
 	switch (tirePosition)
 	{
@@ -82,13 +82,13 @@ glm::vec3 Scene::getTireRotation(TirePosition tirePosition)
 		switch (tireOrientation)
 		{
 		case Scene::TURNED_RIGHT:
-			return rightTireRotation - frontTireTurned;
+			return RIGHT_TIRE_ROTATION - FRONT_TIRE_TURNED;
 			break;
 		case Scene::TURNED_LEFT:
-			return rightTireRotation + frontTireTurned;
+			return RIGHT_TIRE_ROTATION + FRONT_TIRE_TURNED;
 			break;
 		default:
-			return rightTireRotation;
+			return RIGHT_TIRE_ROTATION;
 			break;
 		}
 		break;
@@ -96,21 +96,21 @@ glm::vec3 Scene::getTireRotation(TirePosition tirePosition)
 		switch (tireOrientation)
 		{
 		case Scene::TURNED_RIGHT:
-			return leftTireRotation - frontTireTurned;
+			return LEFT_TIRE_ROTATION - FRONT_TIRE_TURNED;
 			break;
 		case Scene::TURNED_LEFT:
-			return leftTireRotation + frontTireTurned;
+			return LEFT_TIRE_ROTATION + FRONT_TIRE_TURNED;
 			break;
 		default:
-			return leftTireRotation;
+			return LEFT_TIRE_ROTATION;
 			break;
 		}
 		break;
 	case Scene::BACK_LEFT:
-		return leftTireRotation;
+		return LEFT_TIRE_ROTATION;
 		break;
 	default:
-		return rightTireRotation;
+		return RIGHT_TIRE_ROTATION;
 		break;
 	}
 }
