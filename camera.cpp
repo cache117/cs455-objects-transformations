@@ -51,7 +51,26 @@ void Camera::moveCamera(float x, float z)
 void Camera::pitch(float angle)
 {
 	glm::vec3 right = glm::normalize(glm::cross(up, forward));
-	forward = glm::vec3(glm::normalize(glm::rotate(angle, right) * glm::vec4(forward, 0.0f)));
+#ifndef USE_CUSTOM_CAMERA_MATRICES
+	glm::mat4 rotation = glm::rotate(angle, right);
+#else
+	//Rodrigues Rotation about an arbitrary vector
+	//I + w * sin(t) + w^2 * (1-cos(t))
+	//I
+	glm::mat4 identity = glm::mat4(1.0f);
+	//w
+	glm::mat4 assymetricMatrix = glm::mat4();
+	assymetricMatrix[0][1] = right.z;
+	assymetricMatrix[0][2] = -right.y;
+	assymetricMatrix[1][0] = -right.z;
+	assymetricMatrix[1][2] = right.x;
+	assymetricMatrix[2][0] = right.y;
+	assymetricMatrix[2][1] = -right.x;
+	//I + w * sin(t) + w^2 * (1-cos(t))
+	glm::mat4 rodriguesRotation = identity + assymetricMatrix * sin(angle) + (assymetricMatrix * assymetricMatrix) * (1 - cos(angle));
+	glm::mat4 rotation = rodriguesRotation;
+#endif //USE_CUSTOM_CAMERA_MATRICES
+	forward = glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0f)));
 	up = glm::normalize(glm::cross(forward, right));
 #ifdef LOCKED_Y_MOVEMENT
 	position.y = CAMERA_HEIGHT;
