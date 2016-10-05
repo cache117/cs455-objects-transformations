@@ -15,7 +15,7 @@ public:
 	void Clear(float r, float g, float b, float a);
 	void Update(Scene& scene);
 
-	inline bool isClosed()
+	inline bool isClosed() const
 	{
 		return m_isClosed;
 	}

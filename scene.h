@@ -126,7 +126,7 @@ private:
 
 	Transform getParkingLotTransform() const;
 	const glm::vec3 PARKING_LOT_POSITION = glm::vec3(4.2f, 0, -4.8f);
-	const glm::vec3 PARKING_LOT_ROTATION = glm::vec3(0, 2.1f, 0);
+	const glm::vec3 PARKING_LOT_ROTATION = glm::vec3(0, (2 * M_PI)/ 3, 0);
 	const glm::vec3 PARKING_LOT_SCALE = glm::vec3(0.8f);
 
 	Transform getTireTransform(const TirePosition& tirePosition) const;

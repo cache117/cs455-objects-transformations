@@ -11,11 +11,10 @@ public:
 	Shader()
 	{ }
 	Shader(const std::string& fileName);
+	virtual ~Shader();
 
 	void Bind();
 	void Update(const Transform& transform, const Camera& camera);
-
-	virtual ~Shader();
 private:
 	static std::string LoadShader(const std::string& fileName);
 	static void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage);
